@@ -1,22 +1,61 @@
 {
   "name": "declare_it",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "scripts": {
+    "precommit": "yarn flow && yarn test",
+    "flow": "flow",
+    "format": "sort-package-json; import-sort --write '*.js'; prettier --write '*.js'; eslint --fix --ignore-pattern '!.eslintrc.js' '*.js';",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "node_modules/.bin/jest"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
   },
   "dependencies": {
     "react": "16.5.0",
     "react-native": "0.57.1"
   },
   "devDependencies": {
+    "babel-eslint": "^9.0.0",
     "babel-jest": "23.6.0",
+    "babel-runtime": "^6.26.0",
+    "eslint": "^5.6.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-flowtype": "^2.50.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react-native": "^3.3.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "flow-bin": "^0.81.0",
+    "husky": "^1.0.0-rc.15",
+    "import-sort-cli": "^5.2.0",
+    "import-sort-parser-babylon": "^5.2.0",
+    "import-sort-style-module": "^5.0.0",
     "jest": "23.6.0",
-    "metro-react-native-babel-preset": "0.45.6",
-    "react-test-renderer": "16.5.0"
+    "lint-staged": "^7.3.0",
+    "metro-react-native-babel-preset": "^0.45.6",
+    "prettier": "^1.14.3",
+    "react-test-renderer": "^16.5.2",
+    "sort-package-json": "^1.15.0"
   },
-  "jest": {
-    "preset": "react-native"
+  "importSort": {
+    ".js, .es": {
+      "parser": "babylon",
+      "style": "module"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "import-sort --write",
+      "prettier --write",
+      "eslint --fix --ignore-pattern '!.eslintrc.js'",
+      "git add"
+    ]
   }
 }
